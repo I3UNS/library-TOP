@@ -1,0 +1,28 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 24px;
+}
+
+body{
+    background-color: burlywood;
+}
+
+#container{
+    background-color: rgb(160, 89, 89);
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#book{
+    padding: 10px;
+    background-color: lightcoral;
+    height: 70%;
+    width: 50%;
+}
+
