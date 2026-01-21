@@ -11,6 +11,7 @@ function Book(){
 }
 */
 
+const bookDisplay = document.getElementById("book");
 const libraryArray = [];
 
 function Book(title, author, pages, haveRead){
@@ -39,4 +40,30 @@ addBook(bookTwo, libraryArray);
 console.log(bookOne);
 console.log(bookTwo);
 
-console.log(`Library: ${libraryArray}`);
+console.log(`Library: ${JSON.stringify(libraryArray)}`); // JSON.stringify works but not in the intended way
+
+function appendArrayToDisplay(){
+    
+    for (let i = 0; i < libraryArray.length; i++){
+        const pTitle = document.createElement('p');
+        const pAuthor = document.createElement('p');
+        const pPages = document.createElement('p');
+        const pStatus = document.createElement('p');
+        const pID = document.createElement('p');
+        pTitle.textContent = `Title: ${libraryArray[i].title}`;
+        pAuthor.textContent = `Author: ${libraryArray[i].author}`;
+        pPages.textContent = `Pages: ${libraryArray[i].pages}`;
+        pStatus.textContent = `Status: ${libraryArray[i].haveRead}`;
+        pID.textContent = `ID: ${libraryArray[i].bookID}`;
+        bookDisplay.appendChild(pTitle);
+        bookDisplay.appendChild(pAuthor);
+        bookDisplay.appendChild(pPages);
+        bookDisplay.appendChild(pStatus);
+        bookDisplay.appendChild(pID);
+    }
+}
+
+let bookThree = new Book('The Vault', 'Dallas Boxton', '563', true);
+addBook(bookThree, libraryArray);
+
+appendArrayToDisplay();
