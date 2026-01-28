@@ -40,8 +40,6 @@ addBook(bookTwo, libraryArray);
 console.log(bookOne);
 console.log(bookTwo);
 
-console.log(`Library: ${JSON.stringify(libraryArray)}`); // JSON.stringify works but not in the intended way
-
 function appendArrayToDisplay(){
     
     for (let i = 0; i < libraryArray.length; i++){
