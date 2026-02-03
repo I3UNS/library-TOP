@@ -12,6 +12,9 @@ function Book(){
 */
 
 const bookDisplay = document.getElementById("book");
+const addBookBtn = document.getElementById("add");
+const submitBtn = document.getElementById("submit");
+const modal = document.querySelector("#modal")
 const libraryArray = [];
 
 function Book(title, author, pages, haveRead){
@@ -41,8 +44,9 @@ console.log(bookOne);
 console.log(bookTwo);
 
 function appendArrayToDisplay(){
-    
-    for (let i = 0; i < libraryArray.length; i++){
+
+    for(let i = 0; i < libraryArray.length; i++){
+
         const pTitle = document.createElement('p');
         const pAuthor = document.createElement('p');
         const pPages = document.createElement('p');
@@ -51,17 +55,32 @@ function appendArrayToDisplay(){
         pTitle.textContent = `Title: ${libraryArray[i].title}`;
         pAuthor.textContent = `Author: ${libraryArray[i].author}`;
         pPages.textContent = `Pages: ${libraryArray[i].pages}`;
-        pStatus.textContent = `Status: ${libraryArray[i].haveRead}`;
+        pStatus.textContent = `Read Status: ${libraryArray[i].haveRead}`;
         pID.textContent = `ID: ${libraryArray[i].bookID}`;
-        bookDisplay.appendChild(pTitle);
-        bookDisplay.appendChild(pAuthor);
-        bookDisplay.appendChild(pPages);
-        bookDisplay.appendChild(pStatus);
-        bookDisplay.appendChild(pID);
+
+        const bookContainer = document.createElement("div");
+
+        bookContainer.appendChild(pTitle);
+        bookContainer.appendChild(pAuthor);
+        bookContainer.appendChild(pPages);
+        bookContainer.appendChild(pStatus);
+        bookContainer.appendChild(pID);
+        
+        bookDisplay.appendChild(bookContainer);
     }
 }
+
 
 let bookThree = new Book('The Vault', 'Dallas Boxton', '563', true);
 addBook(bookThree, libraryArray);
 
 appendArrayToDisplay();
+
+addBookBtn.addEventListener("click", () => {
+    modal.showModal();
+})
+
+submitBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    modal.close();
+})
