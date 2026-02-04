@@ -26,9 +26,11 @@ function Book(title, author, pages, haveRead){
     this.author = author,
     this.pages = pages,
     this.haveRead = haveRead,
-    this.bookID = crypto.randomUUID();
+    this.bookID = crypto.randomUUID(),
+    this.updateStatus = function(){
+        this.haveRead = !this.haveRead;
+    };
 
-    return `BookID: ${this.bookID} - ${this.title} was written by ${this.author}. It consists of ${this.pages} pages. Current Read status: ${this.haveRead}`;
 }
 
 function addBook(book, library){
@@ -57,6 +59,7 @@ function appendArrayToDisplay(){
         pPages.textContent = `Pages: ${libraryArray[i].pages}`;
         pStatus.textContent = `Read Status: ${libraryArray[i].haveRead}`;
         pID.textContent = `ID: ${libraryArray[i].bookID}`;
+        pID.className = "data-book-id";  
 
         const bookContainer = document.createElement("div");
 
@@ -82,5 +85,8 @@ addBookBtn.addEventListener("click", () => {
 
 submitBtn.addEventListener("click", (event) => {
     event.preventDefault();
+    const formData = new Book(event.target);
+    console.log(formData);
     modal.close();
 })
+
