@@ -28,7 +28,7 @@ function Book(title, author, pages, haveRead){
     this.haveRead = haveRead,
     this.bookID = crypto.randomUUID(),
     this.updateStatus = function(){
-        this.haveRead = !this.haveRead;
+        this.haveRead = !this.haveRead;     
     };
 
 }
@@ -36,14 +36,6 @@ function Book(title, author, pages, haveRead){
 function addBook(book, library){
     library.push(book);
 }
-
-let bookOne = new Book('Estate Developer', 'N/A', '781', true);
-let bookTwo = new Book('Idiotify Your Science', 'Jimmy Hopkins', '420', false);
-addBook(bookOne, libraryArray);
-addBook(bookTwo, libraryArray);
-
-console.log(bookOne);
-console.log(bookTwo);
 
 function appendArrayToDisplay(){
 
@@ -53,13 +45,42 @@ function appendArrayToDisplay(){
         const pAuthor = document.createElement('p');
         const pPages = document.createElement('p');
         const pStatus = document.createElement('p');
+        const pStatusBtn = document.createElement('button');
         const pID = document.createElement('p');
+        const removeBtn = document.createElement("button");
+        
         pTitle.textContent = `Title: ${libraryArray[i].title}`;
         pAuthor.textContent = `Author: ${libraryArray[i].author}`;
         pPages.textContent = `Pages: ${libraryArray[i].pages}`;
         pStatus.textContent = `Read Status: ${libraryArray[i].haveRead}`;
+        pStatusBtn.textContent = `Toggle`;
         pID.textContent = `ID: ${libraryArray[i].bookID}`;
-        pID.className = "data-book-id";  
+        removeBtn.textContent = `Remove Book`;
+
+        pTitle.id = `title`;
+        pAuthor.id = `author`;
+        pPages.id = `pages`;
+        pStatus.id = `read-status`;
+        pStatusBtn.id = `status-toggle-btn`;
+        pID.id = "book-id";  
+        pID.setAttribute("data-book-id", libraryArray[i].bookID);
+        removeBtn.id = `remove-book`;
+
+        pStatusBtn.addEventListener("click", ()=>{
+            libraryArray[i].updateStatus();
+            pStatus.textContent = `Read Status: ${libraryArray[i].haveRead}`;
+        });
+
+        // Work on this to showcase the updated library visually
+        removeBtn.addEventListener("click", () => {
+            if (pID.dataset.bookId == `${libraryArray[i].bookID}`){
+                console.log(libraryArray[i]);
+                
+                `${libraryArray[i]}`.pop;
+                console.log("Working");
+                console.log(libraryArray);
+            };
+        })
 
         const bookContainer = document.createElement("div");
 
@@ -67,17 +88,20 @@ function appendArrayToDisplay(){
         bookContainer.appendChild(pAuthor);
         bookContainer.appendChild(pPages);
         bookContainer.appendChild(pStatus);
+        bookContainer.appendChild(pStatusBtn);
         bookContainer.appendChild(pID);
+        bookContainer.appendChild(removeBtn);
         
         bookDisplay.appendChild(bookContainer);
     }
 }
 
-
-let bookThree = new Book('The Vault', 'Dallas Boxton', '563', true);
-addBook(bookThree, libraryArray);
-
-appendArrayToDisplay();
+let bookOne = new Book('Estate Developer', 'N/A', '781', true);
+// let bookTwo = new Book('Idiotify Your Science', 'Jimmy Hopkins', '420', false);
+// let bookThree = new Book('The Vault', 'Dallas Boxton', '563', true);
+addBook(bookOne, libraryArray);
+// addBook(bookTwo, libraryArray);
+// addBook(bookThree, libraryArray);
 
 addBookBtn.addEventListener("click", () => {
     modal.showModal();
@@ -85,8 +109,14 @@ addBookBtn.addEventListener("click", () => {
 
 submitBtn.addEventListener("click", (event) => {
     event.preventDefault();
-    const formData = new Book(event.target);
-    console.log(formData);
+    const modalTitle = modal.querySelector('#title').value;
+    const modalAuthor = modal.querySelector("#author").value;
+    const modalPages = modal.querySelector('#pages').value;
+    const modalReadStatus = modal.querySelector('#read-status').checked;
+
+    const currBook = new Book(modalTitle, modalAuthor, modalPages, modalReadStatus);
+    addBook(currBook, libraryArray);
+    appendArrayToDisplay();
+    
     modal.close();
 })
-

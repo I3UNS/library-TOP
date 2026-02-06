@@ -67,3 +67,18 @@ input:not(#read-status){
     color: black;
     border-radius: 0.5em;
 }
+
+#read-status{
+    display: inline-block;
+    text-transform: capitalize;
+}
+
+#status-toggle-btn, #remove-book{
+    padding: 5px;
+    border-radius: 0.35rem;
+}
+
+#remove-book{
+    display: block;
+    width: 100%;
+}
