@@ -1,16 +1,3 @@
-/*
-function Book(){
-    if(!new.target){
-        throw Error("You must use the new keyword before the constructor 'Book'");
-    }
-
-    this.title = "Omniscient Reader's Viewpoint",
-    this.author = "Sing-Song",
-    this.pages = "796",
-    this.haveRead = true;
-}
-*/
-
 const bookDisplay = document.getElementById("book");
 const addBookBtn = document.getElementById("add");
 const submitBtn = document.getElementById("submit");
@@ -71,17 +58,13 @@ function appendArrayToDisplay(){
             pStatus.textContent = `Read Status: ${libraryArray[i].haveRead}`;
         });
 
-        // Work on this to showcase the updated library visually
         removeBtn.addEventListener("click", () => {
             if (pID.dataset.bookId == `${libraryArray[i].bookID}`){
-                console.log(libraryArray[i]);
-                
                 `${libraryArray[i]}`.pop;
-                console.log("Working");
-                console.log(libraryArray);
+                bookDisplay.removeChild(bookContainer);
             };
         })
-
+        
         const bookContainer = document.createElement("div");
 
         bookContainer.appendChild(pTitle);
@@ -96,27 +79,21 @@ function appendArrayToDisplay(){
     }
 }
 
-let bookOne = new Book('Estate Developer', 'N/A', '781', true);
-// let bookTwo = new Book('Idiotify Your Science', 'Jimmy Hopkins', '420', false);
-// let bookThree = new Book('The Vault', 'Dallas Boxton', '563', true);
-addBook(bookOne, libraryArray);
-// addBook(bookTwo, libraryArray);
-// addBook(bookThree, libraryArray);
-
 addBookBtn.addEventListener("click", () => {
     modal.showModal();
 })
 
 submitBtn.addEventListener("click", (event) => {
     event.preventDefault();
+
     const modalTitle = modal.querySelector('#title').value;
     const modalAuthor = modal.querySelector("#author").value;
     const modalPages = modal.querySelector('#pages').value;
     const modalReadStatus = modal.querySelector('#read-status').checked;
 
     const currBook = new Book(modalTitle, modalAuthor, modalPages, modalReadStatus);
+    
     addBook(currBook, libraryArray);
     appendArrayToDisplay();
-    
     modal.close();
 })
