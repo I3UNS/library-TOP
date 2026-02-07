@@ -1,17 +1,7 @@
-/*
-function Book(){
-    if(!new.target){
-        throw Error("You must use the new keyword before the constructor 'Book'");
-    }
-
-    this.title = "Omniscient Reader's Viewpoint",
-    this.author = "Sing-Song",
-    this.pages = "796",
-    this.haveRead = true;
-}
-*/
-
 const bookDisplay = document.getElementById("book");
+const addBookBtn = document.getElementById("add");
+const submitBtn = document.getElementById("submit");
+const modal = document.querySelector("#modal")
 const libraryArray = [];
 
 function Book(title, author, pages, haveRead){
@@ -23,45 +13,87 @@ function Book(title, author, pages, haveRead){
     this.author = author,
     this.pages = pages,
     this.haveRead = haveRead,
-    this.bookID = crypto.randomUUID();
+    this.bookID = crypto.randomUUID(),
+    this.updateStatus = function(){
+        this.haveRead = !this.haveRead;     
+    };
 
-    return `BookID: ${this.bookID} - ${this.title} was written by ${this.author}. It consists of ${this.pages} pages. Current Read status: ${this.haveRead}`;
 }
 
 function addBook(book, library){
     library.push(book);
 }
 
-let bookOne = new Book('Estate Developer', 'N/A', '781', true);
-let bookTwo = new Book('Idiotify Your Science', 'Jimmy Hopkins', '420', false);
-addBook(bookOne, libraryArray);
-addBook(bookTwo, libraryArray);
-
-console.log(bookOne);
-console.log(bookTwo);
-
 function appendArrayToDisplay(){
-    
-    for (let i = 0; i < libraryArray.length; i++){
+
+    for(let i = 0; i < libraryArray.length; i++){
+
         const pTitle = document.createElement('p');
         const pAuthor = document.createElement('p');
         const pPages = document.createElement('p');
         const pStatus = document.createElement('p');
+        const pStatusBtn = document.createElement('button');
         const pID = document.createElement('p');
+        const removeBtn = document.createElement("button");
+        
         pTitle.textContent = `Title: ${libraryArray[i].title}`;
         pAuthor.textContent = `Author: ${libraryArray[i].author}`;
         pPages.textContent = `Pages: ${libraryArray[i].pages}`;
-        pStatus.textContent = `Status: ${libraryArray[i].haveRead}`;
+        pStatus.textContent = `Read Status: ${libraryArray[i].haveRead}`;
+        pStatusBtn.textContent = `Toggle`;
         pID.textContent = `ID: ${libraryArray[i].bookID}`;
-        bookDisplay.appendChild(pTitle);
-        bookDisplay.appendChild(pAuthor);
-        bookDisplay.appendChild(pPages);
-        bookDisplay.appendChild(pStatus);
-        bookDisplay.appendChild(pID);
+        removeBtn.textContent = `Remove Book`;
+
+        pTitle.id = `title`;
+        pAuthor.id = `author`;
+        pPages.id = `pages`;
+        pStatus.id = `read-status`;
+        pStatusBtn.id = `status-toggle-btn`;
+        pID.id = "book-id";  
+        pID.setAttribute("data-book-id", libraryArray[i].bookID);
+        removeBtn.id = `remove-book`;
+
+        pStatusBtn.addEventListener("click", ()=>{
+            libraryArray[i].updateStatus();
+            pStatus.textContent = `Read Status: ${libraryArray[i].haveRead}`;
+        });
+
+        removeBtn.addEventListener("click", () => {
+            if (pID.dataset.bookId == `${libraryArray[i].bookID}`){
+                `${libraryArray[i]}`.pop;
+                bookDisplay.removeChild(bookContainer);
+            };
+        })
+        
+        const bookContainer = document.createElement("div");
+
+        bookContainer.appendChild(pTitle);
+        bookContainer.appendChild(pAuthor);
+        bookContainer.appendChild(pPages);
+        bookContainer.appendChild(pStatus);
+        bookContainer.appendChild(pStatusBtn);
+        bookContainer.appendChild(pID);
+        bookContainer.appendChild(removeBtn);
+        
+        bookDisplay.appendChild(bookContainer);
     }
 }
 
-let bookThree = new Book('The Vault', 'Dallas Boxton', '563', true);
-addBook(bookThree, libraryArray);
+addBookBtn.addEventListener("click", () => {
+    modal.showModal();
+})
 
-appendArrayToDisplay();
+submitBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const modalTitle = modal.querySelector('#title').value;
+    const modalAuthor = modal.querySelector("#author").value;
+    const modalPages = modal.querySelector('#pages').value;
+    const modalReadStatus = modal.querySelector('#read-status').checked;
+
+    const currBook = new Book(modalTitle, modalAuthor, modalPages, modalReadStatus);
+    
+    addBook(currBook, libraryArray);
+    appendArrayToDisplay();
+    modal.close();
+})

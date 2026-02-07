@@ -20,9 +20,65 @@ body{
 }
 
 #book{
-    padding: 10px;
-    background-color: lightcoral;
+    overflow: scroll;
+    padding: 20px;
+    background-color: #f26e6e;
     height: 70%;
-    width: 50%;
+    width: 60%;
+    border-radius: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 45px;
 }
 
+#add{
+    padding: 10px;
+    border-radius: 5%;
+    font-size: 0.75rem;
+    background-color: burlywood;
+}
+
+#book > div{
+    padding: 25px;
+    background-color: #f7abab;
+}
+
+#book > div > p {
+    padding: 5px;
+}
+
+#modal{
+    padding: 25px;
+    width: 50%;
+    margin: 25vh auto;
+}
+
+input:not(#read-status){
+    display: block;
+    margin: 10px 0;
+    width: 100%;
+}
+
+#submit{
+    padding: 10px;
+    font-size: 0.75rem;
+    background-color: lightgreen;
+    color: black;
+    border-radius: 0.5em;
+}
+
+#read-status{
+    display: inline-block;
+    text-transform: capitalize;
+}
+
+#status-toggle-btn, #remove-book{
+    padding: 5px;
+    border-radius: 0.35rem;
+}
+
+#remove-book{
+    display: block;
+    width: 100%;
+}

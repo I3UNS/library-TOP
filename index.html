@@ -8,7 +8,29 @@
 </head>
 <body>
     <div id="container">
-        <div id="book"></div>
+        <div id="book">
+            <button type="button" id="add">Add Book</button>
+            <dialog id="modal">
+                <form method="dialog" id="form">
+                    <label for="title">Title:
+                        <input type="text" name="title" id="title">
+                    </label>
+                    
+                    <label for="author">Author:
+                        <input type="text" name="author" id="author">
+                    </label>
+
+                    <label for="pages">Pages:
+                        <input type="text" name="pages" id="pages">
+                    </label>
+
+                    <label for="read-status">Read Status:
+                        <input type="checkbox" name="read-status" id="read-status">
+                    </label>
+                    <br><button type="submit" id="submit">Submit</button>
+                </form>
+            </dialog>
+        </div>
     </div>
     <script src="library.js"></script>
 </body>
