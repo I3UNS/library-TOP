@@ -4,20 +4,21 @@ const submitBtn = document.getElementById("submit");
 const modal = document.querySelector("#modal")
 const libraryArray = [];
 
-function Book(title, author, pages, haveRead){
-    if(!new.target){
-        throw Error("You must use the new keyword before the constructor 'Book'");
+class Book {
+    constructor(title, author, pages, haveRead) {
+        if (!new.target) {
+            throw Error("You must use the new keyword before the constructor 'Book'");
+        }
+
+        this.title = title,
+            this.author = author,
+            this.pages = pages,
+            this.haveRead = haveRead,
+            this.bookID = crypto.randomUUID(),
+            this.updateStatus = function () {
+                this.haveRead = !this.haveRead;
+            };
     }
-
-    this.title = title,
-    this.author = author,
-    this.pages = pages,
-    this.haveRead = haveRead,
-    this.bookID = crypto.randomUUID(),
-    this.updateStatus = function(){
-        this.haveRead = !this.haveRead;     
-    };
-
 }
 
 function addBook(book, library){
